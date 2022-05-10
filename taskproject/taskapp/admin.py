@@ -9,4 +9,4 @@ class SprintAdmin(admin.ModelAdmin):
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ['id', 'task_number', 'description', 'sprint', 'user', 'status', 'start_date', 'image']
+    list_display = ['id', 'task_number', 'description', 'sprint', 'user', 'status', 'start_date', 'image', 'backlog']

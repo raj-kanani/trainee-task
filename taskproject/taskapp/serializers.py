@@ -25,6 +25,19 @@ class SprintSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
+    """status_display is a read-only field
+     to be serialized that returns the value of the
+     get_status_display method on the serializer"""
+
+    # status = serializers.SerializerMethodField('get_status_display')
+
     class Meta:
         model = Task
-        fields = '__all__'
+        fields = ['id', 'task_number', 'description',
+                  'sprint', 'user', 'status', 'start_date', 'image', 'backlog']
+
+    # def get_status_display(self, obj):
+    #     return obj.get_status_display()
+
+
+
