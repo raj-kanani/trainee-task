@@ -10,13 +10,11 @@ router.register('sprints', views.SprintViewSet)
 router.register('tasks', views.TaskViewSet)
 router.register('user', views.UserViewSet)
 
-
-
 urlpatterns = [
                   path('gettoken/', obtain_auth_token),
                   path('', include(router.urls)),
                   path('movetask/', views.MoveTask.as_view(), name='movetask'),
                   path('changetask/', views.ChangeStatus.as_view(), name='changetask'),
-
+                  path('movebacklog/<int:id>/', views.MoveBacklog.as_view(), name='movebacklog'),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -12,7 +12,7 @@ class DefaultsMixin(object):
 
 
 class SprintViewSet(DefaultsMixin, viewsets.ModelViewSet):
-    queryset = Sprint.objects.order_by('end_date')
+    queryset = Sprint.objects.all()
     serializer_class = SprintSerializer
 
 
@@ -31,6 +31,7 @@ class UserViewSet(DefaultsMixin, viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 
+# move to expire (inactive) to active sprint
 class MoveTask(APIView):
     def post(self, request):
         data = request.data
@@ -41,12 +42,27 @@ class MoveTask(APIView):
         return Response({'success': 'task successfully moved'})
 
 
+# change the status of task
 class ChangeStatus(APIView):
     def post(self, request):
         data = request.data
-        task = Sprint.objects.get(status=data['status'])
-        task.status = data['status']
-        task.save()
+        task = Task.objects.get(status=data['status'])
+        if task.status != "STATUS_COMPLETED":
+            task.status = "STATUS_COMPLETED"
+            task.save()
         return Response({'msg': 'status updated'})
 
 
+# move task from backlog to active sprint.
+class MoveBacklog(APIView):
+    def post(self, request, id):
+        data = request.data
+        task = Task.objects.get(id=data['id'])
+        print(task)
+        if task.backlog:
+            print(task.backlog)
+            print(task.sprint.status, '*************')
+            task.sprint.status = "active"
+            task.save()
+            print(task.sprint.status, '*************')
+        return Response({'msg': 'success !!! move backlog to active sprint'})

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import *
 from django.contrib.auth import get_user_model
+from datetime import date
 
 User = get_user_model()
 
@@ -38,6 +39,4 @@ class TaskSerializer(serializers.ModelSerializer):
 
     # def get_status_display(self, obj):
     #     return obj.get_status_display()
-
-
 

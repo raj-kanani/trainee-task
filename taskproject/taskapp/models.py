@@ -37,9 +37,9 @@ class Task(models.Model):
 
     task_number = models.IntegerField()
     description = models.CharField(max_length=150, null=True, blank=True)
-    sprint = models.ForeignKey(Sprint, on_delete=models.DO_NOTHING, blank=True, null=True)
+    sprint = models.ForeignKey(Sprint, on_delete=models.CASCADE, blank=True, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
-    status = models.CharField(max_length=120, choices=STATUS_CHOICES)
+    status = models.CharField(max_length=120, choices=STATUS_CHOICES, default=STATUS_TODO)
     start_date = models.DateField(blank=True, null=True)
     image = models.ImageField(upload_to=nameFile, blank=True, null=True)
     backlog = models.BooleanField()
